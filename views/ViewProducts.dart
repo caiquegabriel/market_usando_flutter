@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:market/components/ProductTarget.dart';
 
 class ViewProducts extends StatefulWidget{
   final List products;
@@ -27,6 +28,8 @@ class _ViewProducts extends State<ViewProducts>{
     for( var i = 0; i < widget.products.length; i++ ){ 
 
       var product = widget.products[i];
+
+      debugPrint( '# ' + product.name );
 
       products_cards.add(
         Card(  
@@ -118,10 +121,12 @@ class _ViewProducts extends State<ViewProducts>{
                                   ), 
                                 ],
                               )
-                            ),
-                          
+                            ), 
                           ],
                         ),
+                    ),
+                    Container( 
+                      child: new ProductTarget( name : product.name, id: product.id )
                     ),
                   ],
                 )

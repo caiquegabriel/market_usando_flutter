@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:market/services/Product.dart';
-import 'package:market/views/ViewProducts.dart'; 
+import 'package:market/views/ViewProducts.dart';
+
+import 'components/general/AppBar.dart'; 
 
 void main() {
   runApp(MyApp());
@@ -21,6 +23,9 @@ class MyApp extends StatelessWidget {
 }
 
 
+/*
+  A página inicial
+*/
 class MyHomePage extends StatefulWidget{
 
   final title;
@@ -94,9 +99,7 @@ class _MyHomePage extends State<MyHomePage>{
     this.first_view( this.parent_functions() ); 
 
     return Scaffold(
-      appBar: AppBar( 
-       title: Text(widget.title),
-      ),
+      appBar: CustomAppBar() as Widget,
       body : Container(
        child:   this._current_view 
       ),
