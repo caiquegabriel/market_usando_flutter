@@ -34,16 +34,18 @@ class MyHomePage extends StatefulWidget{
 
 class _MyHomePage extends State<MyHomePage>{
 
-  String __load( Map container ){ 
+  Widget load( Map container ){ 
 
     List products = ProductService.fetch_products(); 
 
     container['change_view']( new ViewProducts( products : products ) ); 
     
-    return 'okay';
+    debugPrint( 'Produtos carregados ...');
+
+    return Text( 'Empty ');
   }
 
-  Widget _current_view;
+  Widget _current_view = null;
   Map<String, dynamic> _container_value ;
 
   /*
@@ -78,16 +80,8 @@ class _MyHomePage extends State<MyHomePage>{
   @override 
   void initState(){
     super.initState();
-  }
 
-  Widget view_controller(){
-    debugPrint('##'+_current_view.runtimeType.toString());
-    if(  _current_view.runtimeType.toString() != 'Null' ){ 
-      return this._current_view as Widget;
-    }else{
-      return Text(this.__load( this.parent_functions() ));
-    }
-  }
+  } 
 
   @override 
   Widget build ( BuildContext context ){
@@ -96,7 +90,7 @@ class _MyHomePage extends State<MyHomePage>{
        title: Text(widget.title),
       ),
       body : Container(
-       child:  this.view_controller(), 
+       child:   this._current_view ?? this.load( this.parent_functions() ), 
       ),
    );
  }
