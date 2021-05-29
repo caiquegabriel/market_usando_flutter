@@ -34,15 +34,17 @@ class MyHomePage extends StatefulWidget{
 
 class _MyHomePage extends State<MyHomePage>{
 
-  Widget load( Map container ){ 
+  Widget first_view( Map container ){ 
 
-    List products = ProductService.fetch_products(); 
+    Future<List> products = ProductService.fetch_products(); 
+    products.then( (products){
+      debugPrint( products.toString() );
 
-    container['change_view']( new ViewProducts( products : products ) ); 
-    
-    debugPrint( 'Produtos carregados ...');
-
-    return Text( 'Empty ');
+      container['change_view']( new ViewProducts( products : products ) ); 
+      
+      debugPrint( 'Produtos carregados ...');
+    });  
+    return Text( 'Carregando ...');
   }
 
   Widget _current_view = null;
@@ -53,6 +55,7 @@ class _MyHomePage extends State<MyHomePage>{
   */
   void change_view( Widget view ){ 
     setState( () { 
+      debugPrint('Mudando view');
       _current_view = view;
     });
   }
@@ -79,19 +82,24 @@ class _MyHomePage extends State<MyHomePage>{
 
   @override 
   void initState(){
-    super.initState();
-
-  } 
+    super.initState(); 
+  }  
 
   @override 
   Widget build ( BuildContext context ){
-   return Scaffold(
+
+    /*
+      Vamos carregar a função primária do nosso APP
+    */
+    this.first_view( this.parent_functions() ); 
+
+    return Scaffold(
       appBar: AppBar( 
        title: Text(widget.title),
       ),
       body : Container(
-       child:   this._current_view ?? this.load( this.parent_functions() ), 
+       child:   this._current_view 
       ),
-   );
+    );
  }
 }
