@@ -4,7 +4,7 @@ class Loading extends StatelessWidget{
 
   String loading_text = "Carregando ...";
 
-  Loading ( { Key key }) : super( key : key );
+  //Loading ( { Key key }) : super( key : key );
 
   @override 
   Widget build( BuildContext context ){

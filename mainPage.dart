@@ -27,12 +27,16 @@ class MainPage extends StatefulWidget{
 
 class _MainPage extends State<MainPage>{
 
-  void first_view( Map container ){ 
-    
-    container['change_view']( Loading() );  
-
-
+  void first_view( Map container ){  
     Future<List> products = ProductService.fetch_products(); 
+
+    //Vamos exibir o loading
+    container['change_view'](Loading());
+
+
+    Timer( 
+      Duration( milliseconds: 500 ) , () => (container['change_view'](Loading()) )
+    );
     products.then( (products) { 
       container['change_view']( new ViewProducts( container: container , products : products ));
     });  
