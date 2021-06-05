@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
 import "package:http/http.dart" as http;
 
 class ServerApi{
@@ -25,6 +26,7 @@ class ServerApi{
     };
 
     Future<List<dynamic>> fetch() async{
+      debugPrint( 'Conectando a ' + this._url );
       final String final_url = Uri.parse( 'https://www.caiquegabriel.com/flutter/' + this._url ).toString();
       var response    = null;
      
