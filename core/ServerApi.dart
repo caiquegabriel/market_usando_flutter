@@ -27,7 +27,7 @@ class ServerApi{
 
     Future<List<dynamic>> fetch() async{
       debugPrint( 'Conectando a ' + this._url );
-      final String final_url = Uri.parse( 'https://www.caiquegabriel.com/flutter/' + this._url ).toString();
+      final String final_url = Uri.parse( 'https://www.caiquegabriel.com/flutter/index.php' + this._url ).toString();
       var response    = null;
      
       switch( this.method ) {
@@ -38,9 +38,9 @@ class ServerApi{
           response = await  http.get( final_url, headers: this._headers );
         break;
         default: 
-          response = await  http.get( final_url, headers: this._headers );
+          response = await  http.post( final_url, body: {} , headers: this._headers );
         break;
-      } 
+      }  
 
       if( response.statusCode == 200 ){
         return jsonDecode(response.body) as List<dynamic> ;

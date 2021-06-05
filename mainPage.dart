@@ -14,8 +14,11 @@ import 'components/general/AppBar.dart';
 class MainPage extends StatefulWidget{
 
   final title;
+  Widget _current_view;
+  Map<String, dynamic> _container_value ;
 
   MainPage( { Key key, this.title }) : super( key : key );
+
 
   @override
   _MainPage createState() => new _MainPage();
@@ -24,17 +27,24 @@ class MainPage extends StatefulWidget{
 
 class _MainPage extends State<MainPage>{
 
-  void first_view( Map container ){  
-    this._current_view = Loading();
+  void first_view( Map container ){ 
+    
+    container['change_view']( Loading() );  
+
+
     Future<List> products = ProductService.fetch_products(); 
-    products.then( (products) {  
-      //Após 3s vai chamar o container
-      Timer( Duration(seconds: 3),  () => container['change_view']( new ViewProducts( container: container , products : products )) );
-    }); 
+    products.then( (products) { 
+      container['change_view']( new ViewProducts( container: container , products : products ));
+    });  
+  } 
+
+  void set_container( String key , dynamic value ){
+    widget._container_value.update( key, value );
   }
 
-  Widget _current_view = null;
-  Map<String, dynamic> _container_value ;
+  dynamic get_container( String key ){
+    return widget._container_value[key];
+  }
 
   /*
     @Param (string) view_name : Nome da view.
@@ -42,16 +52,8 @@ class _MainPage extends State<MainPage>{
   void change_view( Widget view ){ 
     setState( () { 
       debugPrint('Mudando view para ' + view.toString() );
-      _current_view = view;
+      widget._current_view = view;
     });
-  }
-
-  void set_container( String key , dynamic value ){
-    this._container_value.update( key, value );
-  }
-
-  dynamic get_container( String key ){
-    return this._container_value[key];
   }
 
   Map parent_functions(){
@@ -64,34 +66,25 @@ class _MainPage extends State<MainPage>{
     }; 
 
     return functions;
-  }
+  } 
 
   @override 
   void initState(){
-    super.initState(); 
+    super.initState();
+    debugPrint('Chamando o first_view');
+    this.first_view( this.parent_functions() ); 
   }  
 
   @override 
-  Widget build ( BuildContext context ){ 
+  Widget build ( BuildContext context ){  
 
-    //this.parent_functions()['change_view'](Text('...'));
-    var j = Text( 'Oops!!');
-
-    Timer( Duration(seconds: 3),  () => 
-      setState((){
-        debugPrint( 'Change !');
-        j  = Text( 'Changed !');
-      })
-    );
-
-    /*
-      Vamos carregar a função primária do nosso APP
-    */
-    this.first_view( this.parent_functions() ); 
-
+    debugPrint('#'+widget._current_view.toString());
+    
     return Scaffold(
       appBar: CustomAppBar() as Widget,
-      body : this._current_view
+      body : Container( 
+        child: widget._current_view
+      )
     );
  }
 }
