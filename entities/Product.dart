@@ -55,10 +55,10 @@ class Product {
   get image_thumbnail    => this._image_thumbnail;
 
   double installment_value(){
-    if( this.price == null || this._installment_number == null || this.price == 0 || this._installment_number < 1 ){
+    if( this._price == null || this._installment_number == null || this.price == 0 || this._installment_number < 1 ){
       return 0;
     }else{ 
-      return round(price, this._installment_number);
+      return division( this._price , this._installment_number, 2);
     }
   }
 
