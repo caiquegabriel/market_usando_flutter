@@ -12,7 +12,7 @@ class ViewProduct extends StatelessWidget{
   Widget build( BuildContext context ){
     return (
       Container( 
-        child:  Text('Vendo product')
+        child:  Text('Vendo product...')
       )
     );
     

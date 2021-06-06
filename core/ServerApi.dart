@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import "package:http/http.dart" as http;
+import 'package:http/io_client.dart';
 
 class ServerApi{
     
@@ -27,7 +29,17 @@ class ServerApi{
 
     Future<List<dynamic>> fetch() async{
       debugPrint( 'Conectando a ' + this._url );
-      final String final_url = Uri.parse( 'https://www.caiquegabriel.com/flutter/index.php' + this._url ).toString();
+
+      final ioc = new HttpClient();
+
+      /*
+        Não esquecer de remover após a produção!
+      */
+      ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+
+      final http = new IOClient(ioc);
+
+      final String final_url = Uri.parse( 'https://192.168.64.2/market_backend/index.php' + this._url ).toString();
       var response    = null;
      
       switch( this.method ) {

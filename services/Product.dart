@@ -21,7 +21,8 @@ class ProductService {
         p.id = response[i]['id'] ?? null;
         p.name = response[i]['name'] ?? null;
         p.price = response[i]['price'] ?? null;
-
+        p.installment_number = response[i]['installment_number'] ?? null; 
+        p.image_thumbnail    = response[i]['image_thumbnail'] ?? null;
         products.add(p);
       }
        

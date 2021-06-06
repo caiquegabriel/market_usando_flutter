@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market/services/Product.dart';
+import 'package:market/views/ViewProduct.dart';
 import 'package:market/views/ViewProducts.dart'; 
 
 import 'components/Loading.dart';
@@ -13,6 +14,7 @@ import 'components/general/AppBar.dart';
 
 class MainPage extends StatefulWidget{
 
+  bool first_loaded = false;
   final title;
   Widget _current_view;
   Map<String, dynamic> _container_value ;
@@ -31,14 +33,11 @@ class _MainPage extends State<MainPage>{
     Future<List> products = ProductService.fetch_products(); 
 
     //Vamos exibir o loading
-    container['change_view'](Loading());
+    container['change_view'](Loading()); 
 
-
-    Timer( 
-      Duration( milliseconds: 500 ) , () => (container['change_view'](Loading()) )
-    );
     products.then( (products) { 
-      container['change_view']( new ViewProducts( container: container , products : products ));
+      container['change_view']( new ViewProducts( container: container , products : products ));  
+      //container['change_view']( new ViewProduct( container: container, product_id : 1 ) );
     });  
   } 
 
@@ -55,7 +54,6 @@ class _MainPage extends State<MainPage>{
   */
   void change_view( Widget view ){ 
     setState( () { 
-      debugPrint('Mudando view para ' + view.toString() );
       widget._current_view = view;
     });
   }
@@ -74,13 +72,20 @@ class _MainPage extends State<MainPage>{
 
   @override 
   void initState(){
-    super.initState();
-    debugPrint('Chamando o first_view');
-    this.first_view( this.parent_functions() ); 
+    super.initState(); 
   }  
 
   @override 
   Widget build ( BuildContext context ){  
+
+    /*
+      Se for false, vamos carregar a tela inicial.
+    */
+    if( widget.first_loaded == false ){
+      this.first_view( this.parent_functions() ); 
+      widget.first_loaded = true; 
+    }
+     
 
     debugPrint('#'+widget._current_view.toString());
     
