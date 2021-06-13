@@ -1,4 +1,7 @@
+
 import 'package:flutter/material.dart';
+import 'package:market/components/general/Back.dart';
+import 'package:market/mainPage.dart';
 
 class ViewProduct extends StatelessWidget{
 
@@ -12,7 +15,17 @@ class ViewProduct extends StatelessWidget{
   Widget build( BuildContext context ){
     return (
       Container( 
-        child:  Text('Vendo product...')
+        child: 
+          Column(
+            children: [
+              Container(
+                child: new Back( CWidget: MainPage() , text : 'Voltar' )
+              ),
+              Container(
+                child: Text('Vendo produto x'),
+              )
+            ],
+          )
       )
     );
     

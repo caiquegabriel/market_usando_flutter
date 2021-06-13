@@ -6,7 +6,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market/services/Product.dart';
-import 'package:market/views/ViewProduct.dart';
 import 'package:market/views/ViewProducts.dart'; 
 
 import 'components/Loading.dart';
@@ -36,15 +35,21 @@ class _MainPage extends State<MainPage>{
     container['change_view'](Loading()); 
 
     products.then( (products) { 
-      container['change_view']( new ViewProducts( container: container , products : products ));  
-      //container['change_view']( new ViewProduct( container: container, product_id : 1 ) );
+      container['change_view']( new ViewProducts( container: container , products : products ));
     });  
   } 
 
+  /*
+    @Param (string) key : Chave do container
+    @Param (dynamic) value
+  */
   void set_container( String key , dynamic value ){
     widget._container_value.update( key, value );
   }
 
+  /*
+    @Return (dynamic)
+  */
   dynamic get_container( String key ){
     return widget._container_value[key];
   }
@@ -58,6 +63,9 @@ class _MainPage extends State<MainPage>{
     });
   }
 
+  /*
+    @Return (Map)
+  */
   Map parent_functions(){
     Map<String, Function> functions ;
 

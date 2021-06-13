@@ -39,7 +39,8 @@ class ServerApi{
 
       final http = new IOClient(ioc);
 
-      final String final_url = Uri.parse( 'https://192.168.64.2/market_backend/index.php' + this._url ).toString();
+//https://192.168.64.2/market_backend/index.php
+      final String final_url = Uri.parse( 'https://caiquegabriel.com/flutter/index.php' + this._url ).toString();
       var response    = null;
      
       switch( this.method ) {
